@@ -8,9 +8,9 @@ MENU = """(G)et score
 
 def main():
     """Get valid score from user and apply function chosen from menu."""
+    score = get_valid_score()
     print(MENU)
     choice = input(">>>: ").upper()
-    score = get_valid_score()
     while choice != "Q":
         if choice == "G":
             score = get_valid_score()
@@ -27,7 +27,7 @@ def main():
 
 
 def get_valid_score():
-    """Get score in valid range from user input."""
+    """Get score within valid range from user input."""
     score = int(input("Score: "))
     while score < 0 or score > 100:
         print("Invalid score!")
@@ -49,7 +49,7 @@ def determine_result(score):
 
 
 def show_stars(score):
-    """Print line of stars of same length as score."""
+    """Print line of stars of same length as the score value."""
     print(score * "*")
 
 
