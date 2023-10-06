@@ -1,9 +1,6 @@
 """
 CP1404/CP5632 Practical 4 - Walkthrough example
 Starter code for cumulative total income program
-
-Line 21 is an exact repeat of line 15 and the +1 range shift is immediately undone by the [month-1] index in line 22.
-If still the case after refactoring, maybe experiment with some other approaches (and compare runtimes etc.).
 """
 
 
@@ -16,12 +13,16 @@ def main():
         income = float(input(f"Enter income for month {month:2}: "))
         incomes.append(income)
 
+    print_report(incomes)
+
+
+def print_report(incomes):
+    """Print individual and cumulative incomes for each month."""
     print("\nIncome Report\n-------------")
     total = 0
-    for month in range(1, number_of_months + 1):
-        income = incomes[month - 1]
-        total += income
-        print("Month {:2} - Income: ${:10.2f} Total: ${:10.2f}".format(month, income, total))
+    for month, income in enumerate(incomes, 1):
+        total += income  # not sure if printing and tracking total is too much for srp, but struggling to think of a nicer way to do this.
+        print(f"Month {month:2} - Income: ${income:10.2f} Total: ${total:10.2f}")  # should maybe put more space between income and total
 
 
 main()
