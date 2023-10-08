@@ -1,7 +1,4 @@
-"""
-CP1404/CP5632 Practical 4 - Intermediate exercises 3
-List comprehensions
-"""
+""" CP1404/CP5632 Practical 4 - Intermediate exercises 3: List comprehensions """
 
 names = ["Bob", "Angel", "Jimi", "Alan", "Ada"]
 full_names = ["Bob Martin", "Angel Harlem", "Jimi Hendrix", "Alan Turing", "Ada Lovelace"]

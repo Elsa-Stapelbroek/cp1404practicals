@@ -28,7 +28,7 @@ def get_subjects():  # would extract_subjects() be better for reading info from 
 def print_subjects(subjects):
     """Print neatly formatted subject details."""
     max_name_length = max([len(subject[1]) for subject in subjects])
-    max_student_count_length = max([len(str(subject[2])) for subject in subjects])  # this seems excessive...
+    max_student_count_length = max([len(str(subject[2])) for subject in subjects])  # might be breaking srp?
     for subject in subjects:
         print(f"{subject[0]} is taught by {subject[1]:{max_name_length}} and has {subject[2]:{max_student_count_length}} students")
 

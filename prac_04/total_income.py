@@ -21,7 +21,7 @@ def print_report(incomes):
     print("\nIncome Report\n-------------")
     total = 0
     for month, income in enumerate(incomes, 1):
-        total += income  # not sure if printing and tracking total is too much for srp, but struggling to think of a nicer way to do this.
+        total += income  # not sure if printing and tracking total is too much for srp, but it seems too broken up otherwise.
         print(f"Month {month:2} - Income: ${income:10.2f} Total: ${total:10.2f}")  # should maybe put more space between income and total
 
 
