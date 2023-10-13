@@ -13,8 +13,6 @@ for word in words:
     except KeyError:
         word_to_count[word] = 1
 
-pairs = sorted(word_to_count.items())
-width = max((len(pair[0]) for pair in pairs))
-
-for pair in pairs:
-    print(f"{pair[0]:{width}} : {pair[1]}")
+width = max((len(word) for word in words))
+for word, count in sorted(word_to_count.items()):
+    print(f"{word:{width}} : {count}")
