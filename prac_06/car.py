@@ -9,9 +9,9 @@ class Car:
 
         fuel: float, one unit of fuel drives one kilometre
         """
+        self.name = name
         self.fuel = fuel
         self._odometer = 0
-        self.name = name
 
     def __str__(self):
         return f"{self.name}, fuel={self.fuel}, odometer={self._odometer}"

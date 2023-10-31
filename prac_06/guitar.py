@@ -1,7 +1,7 @@
 """Guitar class."""
 
 CURRENT_YEAR = 2023
-VINTAGE_MINIMUM = 50
+VINTAGE_AGE = 50
 
 
 class Guitar:
@@ -23,4 +23,4 @@ class Guitar:
 
     def is_vintage(self):
         """Determine whether a Guitar is vintage based on its age and the minimum vintage age."""
-        return self.get_age() >= VINTAGE_MINIMUM
+        return self.get_age() >= VINTAGE_AGE

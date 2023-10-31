@@ -1,5 +1,5 @@
 """Guitars part 2: Testing"""
-from guitar import Guitar
+from prac_06.guitar import Guitar
 
 CURRENT_YEAR = 2023  # Doesn't affect program, maybe edit class for CURRENT_YEAR to be determined in client code?
 
@@ -14,4 +14,3 @@ print(f"{other.name} is_vintage() - Expected {False}. Got {other.is_vintage()}")
 
 print(gibson)
 print(other)
-

@@ -3,7 +3,7 @@ Programming Languages
 estimated: 30 minutes
 actual: 16 minutes for main code, 22 including docstrings etc.
 """
-from programming_language import ProgrammingLanguage
+from prac_06.programming_language import ProgrammingLanguage
 
 python = ProgrammingLanguage("Python", "Dynamic", True, 1991)
 ruby = ProgrammingLanguage("Ruby", "Dynamic", True, 1995)
