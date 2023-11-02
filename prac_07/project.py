@@ -13,8 +13,9 @@ class Project:
         self.completion = completion
 
     def __str__(self):
-        """"""
-        return self.name
+        """Represent Project as string."""  # TODO: fix description!
+        return f"{self.name}, start: {self.start_date}, priority {self.priority}, estimate: ${self.cost_estimate:,.2f}, " \
+               f"completion: {self.completion}%"
 
     def __lt__(self, other):
         """"""

@@ -46,12 +46,13 @@ def main():
     choice = input(">>>").upper()
     while choice != "Q":
         if choice == "L":
-            filename = input("Filename: ")
+            filename = input("Filename: ")  # maybe extract method later (also to error check for valid filename)?
             projects = load_projects(filename)  # if this is supposed to replace the old projects... not exactly sure
         elif choice == "S":
-            save_projects()
+            filename = input("Filename: ")
+            save_projects(projects, filename)
         elif choice == "D":
-            display_projects()
+            display_projects(projects)
         elif choice == "F":
             filter_projects()
         elif choice == "A":
@@ -79,12 +80,21 @@ def load_projects(filename):
     return projects
 
 
-def save_projects():
+def save_projects(projects, filename):
     pass
 
 
-def display_projects():
-    pass
+def display_projects(projects):
+    """Display projects grouped by completion status and order by priority."""
+    projects.sort()
+    completed_projects = []
+    print("Incomplete projects:")
+    for project in projects:
+        print(project) if not project.is_completed() else completed_projects.append(project)
+    print("Completed projects:")
+    for project in completed_projects:  # DRY??
+        print(project)
+    # Tried generator, didn't work (figure out why!), surely there's a nicer way?
 
 
 def filter_projects():
