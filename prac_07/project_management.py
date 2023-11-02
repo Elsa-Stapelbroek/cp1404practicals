@@ -28,6 +28,8 @@ Expectations:
 """
 from prac_07.project import Project
 
+FILENAME = "projects.txt"
+
 MENU = """- (L)oad projects  
 - (S)ave projects  
 - (D)isplay projects  
@@ -39,12 +41,13 @@ MENU = """- (L)oad projects
 
 def main():
     """"""
-    projects = load_projects()
+    projects = load_projects(FILENAME)
     print(MENU)
     choice = input(">>>").upper()
     while choice != "Q":
         if choice == "L":
-            load_projects()
+            filename = input("Filename: ")
+            projects = load_projects(filename)  # if this is supposed to replace the old projects... not exactly sure
         elif choice == "S":
             save_projects()
         elif choice == "D":
@@ -63,8 +66,17 @@ def main():
     print("Thank you for using custom-built project management software.")
 
 
-def load_projects(filename="projects.txt"):
-    pass
+def load_projects(filename):
+    """Load project list from txt file."""
+    projects = []
+    with open(filename, 'r') as in_file:
+        in_file.readline()
+        for line in in_file:
+            parts = line.strip().split("\t")
+            print(parts)
+            project = Project(parts[0], parts[1], int(parts[2]), float(parts[3]), int(parts[4]))
+            projects.append(project)
+    return projects
 
 
 def save_projects():
@@ -85,3 +97,6 @@ def add_project():
 
 def update_project():
     pass
+
+
+main()
