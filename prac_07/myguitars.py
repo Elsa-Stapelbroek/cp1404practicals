@@ -17,8 +17,9 @@ from prac_07.guitar import Guitar
 
 
 def main():
-    """Program store and display Guitar objects from csv."""
+    """Program to order (by year) and display Guitar objects loaded from csv."""
     guitars = load_guitars()
+    guitars.sort()
     for guitar in guitars:
         print(guitar)
 
@@ -31,3 +32,6 @@ def load_guitars():
             parts = line.strip().split(',')
             guitars.append(Guitar(parts[0], int(parts[1]), float(parts[2])))
     return guitars
+
+
+main()
