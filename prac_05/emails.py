@@ -2,9 +2,7 @@
 CP1404/CP5632 Practical 5 - Do-from-scratch exercise 2
 Emails
 Estimate: 40 minutes
-Actual: 22 minutes  # works, but can definitely be improved
-
-Recommended to use join function for this one... not sure where
+Actual: 22 minutes
 """
 
 

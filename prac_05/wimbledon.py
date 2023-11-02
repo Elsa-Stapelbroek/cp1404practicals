@@ -24,7 +24,7 @@ def load_records():
         in_file.readline()
         records = []
         for line in in_file:
-            records.append(line.split(','))
+            records.append(line.strip().split(','))
     return records
 
 
@@ -48,7 +48,7 @@ def display_results(winner_to_count, countries):
         print(winner, count)
 
     print(
-        f"\nThese {len(countries)} have won Wimbledon:\n{', '.join(sorted(countries))}")
+        f"\nThese {len(countries)} countries have won Wimbledon:\n{', '.join(sorted(countries))}")
 
 
 main()

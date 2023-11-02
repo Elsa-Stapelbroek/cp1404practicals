@@ -7,12 +7,14 @@ Actual: 9 minutes  # though current program doesn't account for punctuation, cap
 
 words = input("Text: ").split()
 word_to_count = {}
+width = 0
 for word in words:
+    if len(word) > width:
+        width = len(word)
     try:
         word_to_count[word] += 1
     except KeyError:
         word_to_count[word] = 1
 
-width = max((len(word) for word in words))
 for word, count in sorted(word_to_count.items()):
     print(f"{word:{width}} : {count}")
