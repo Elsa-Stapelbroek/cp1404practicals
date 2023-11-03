@@ -20,7 +20,8 @@ Expectations:
 - Use the datetime module for the project start date
 - Write your class to sort/compare Project objects based on priority order
 - Think about writing utility/helper methods in your class and main program.
-- Follow good design principles like SRP and DRY. Notice that there's two kinds of loading and write one function to handle both. Same for saving.
+- Follow good design principles like SRP and DRY. Notice that there's two kinds of loading and write one function to
+handle both. Same for saving.
 - Write good clean code (no pylint warnings) with good naming and design (as always!)
 - Here are two suggestions to leave until last (iterative development):
     - Error checking. Do no error checking to start with.
@@ -48,7 +49,7 @@ def main():
     while menu_choice != "Q":
         if menu_choice == "L":
             filename = input("Filename: ")  # maybe extract method later (also to error check for valid filename)?
-            projects = load_projects(filename)  # if this is supposed to replace the old projects... not exactly sure
+            projects = load_projects(filename)
         elif menu_choice == "S":
             filename = input("Filename: ")
             save_projects(projects, filename, headers)
@@ -57,11 +58,12 @@ def main():
         elif menu_choice == "F":
             filter_projects()
         elif menu_choice == "A":
-            add_project()
+            add_project(projects)
         elif menu_choice == "U":
             # TODO: condense this section into function(s)
             for i, project in enumerate(projects):
                 print(f"{i} {project}")
+            # choose project
             project_choice = projects[get_number_in_range(len(projects), "Project choice: ")]
             print(project_choice)
             update_project(project_choice)
@@ -112,51 +114,56 @@ def filter_projects():
     pass
 
 
-def add_project():
-    pass
+def add_project(projects):
+    """Add project from user input."""
+    print("Let's add a new project")
+    name = input("Name: ")
+    start_date = input("Start date (dd/mm/yy): ")
+    priority = get_number("Priority: ")
+    cost_estimate = float(input("Cost estimate: $"))  # not yet error-checked
+    completion = get_number_in_range(100, "Percent complete: ")
+    projects.append(Project(name, start_date, priority, cost_estimate, completion))
+    projects.sort()
 
 
 def update_project(project):
     """Update the priority and/or completion percentage based on user input."""
-    project.priority = get_value(project.priority, "priority")
-    new_percentage = get_value(project.completion, "completion")
+    project.priority = get_updated_value(project.priority, "priority")
+    new_percentage = get_updated_value(project.completion, "completion")
     while 0 > new_percentage or new_percentage > 100:  # Make sure percentage is in valid range
         print("Invalid percentage")
-        new_percentage = get_value(project.completion, "completion")
+        new_percentage = get_updated_value(project.completion, "completion")
     project.completion = new_percentage
 
 
 def get_number_in_range(upper_limit, prompt="Number in range: "):
     """Get number within specified range."""
-    number = int(input(prompt))
+    number = get_number(prompt)
     while number not in range(upper_limit):
         print("Number outside valid range.")
-        number = int(input(prompt))
+        number = get_number(prompt)
     return number
 
 
-def get_value(field, fieldname):  # surely that doesn't have to be two params?
+def get_number(prompt="Number: "):
+    """Get valid integer between lower and upper limits (inclusive) from user input."""
+    is_valid_input = False
+    while not is_valid_input:
+        try:
+            number = int(input(prompt))
+            is_valid_input = True
+        except ValueError:
+            print("Invalid (not an integer)")
+    return number  # Ignore Pycharm warning (impossible error)
+
+
+def get_updated_value(field, fieldname):  # surely that doesn't have to be two params?
     """Return new field value from user input (no change if input is empty string)."""
     value = input(f"New {fieldname}: ")
     if value == "":
         return field  # Field unchanged
     else:
         return int(value)  # No error checking yet!
-
-
-def get_number(lower_limit, upper_limit, prompt="Number: "):
-    """Get valid integer between lower and upper limits (inclusive) from user input."""
-    is_valid_input = False
-    while not is_valid_input:
-        try:
-            number = int(input(prompt))
-            if number < lower_limit or number > upper_limit:
-                print(f"Number must be between {lower_limit} and {upper_limit} (inclusive)")
-            else:
-                is_valid_input = True
-        except ValueError:
-            print("Invalid (not an integer)")
-    return number  # Ignore Pycharm warning (impossible error)
 
 
 main()
