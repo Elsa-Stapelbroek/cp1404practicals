@@ -12,6 +12,10 @@ class Project:
         self.cost_estimate = cost_estimate
         self.completion = completion
 
+    def __repr__(self):  # check repr vs str
+        """Represent Project as string."""  # TODO: fix description!
+        return f"{self.name}\t{self.start_date}\t{self.priority}\t{self.cost_estimate:.1f}\t{self.completion}"
+
     def __str__(self):
         """Represent Project as string."""  # TODO: fix description!
         return f"{self.name}, start: {self.start_date}, priority {self.priority}, estimate: ${self.cost_estimate:,.2f}, " \

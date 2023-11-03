@@ -2,7 +2,7 @@
 CP1404 practical 7 - Project management program (do from scratch)
 
 estimate: 90 mins (no idea!)
-actual time:
+actual time: 55 mins so far (so it'll probably take quite a bit longer)
 
 Write a program in project_management.py to load and save a data file and use a list of Project objects.
 
@@ -41,29 +41,35 @@ MENU = """- (L)oad projects
 
 def main():
     """"""
-    projects = load_projects(FILENAME)
+    projects, headers = load_projects(FILENAME)
     print(MENU)
-    choice = input(">>>").upper()
-    while choice != "Q":
-        if choice == "L":
+    menu_choice = input(">>>").upper()
+    while menu_choice != "Q":
+        if menu_choice == "L":
             filename = input("Filename: ")  # maybe extract method later (also to error check for valid filename)?
             projects = load_projects(filename)  # if this is supposed to replace the old projects... not exactly sure
-        elif choice == "S":
+        elif menu_choice == "S":
             filename = input("Filename: ")
-            save_projects(projects, filename)
-        elif choice == "D":
+            save_projects(projects, filename, headers)
+        elif menu_choice == "D":
             display_projects(projects)
-        elif choice == "F":
+        elif menu_choice == "F":
             filter_projects()
-        elif choice == "A":
+        elif menu_choice == "A":
             add_project()
-        elif choice == "U":
-            update_project()
+        elif menu_choice == "U":
+            for i, project in enumerate(projects):
+                print(f"{i} {project}")
+            project_to_update = projects[
+                get_number(0, len(projects) - 1, "Project choice: ")]  # currently relies on enumerate starting at 0
+            print(project_to_update)
+            update_project(project_to_update)
+            # update_project()
         else:
             print("Invalid input!")
         print(MENU)
-        choice = input(">>>").upper()
-    save_projects()
+        menu_choice = input(">>>").upper()
+    save_projects(projects, "temporary_file.txt", headers)
     print("Thank you for using custom-built project management software.")
 
 
@@ -71,17 +77,21 @@ def load_projects(filename):
     """Load project list from txt file."""
     projects = []
     with open(filename, 'r') as in_file:
-        in_file.readline()
+        headers = in_file.readline().strip()
         for line in in_file:
             parts = line.strip().split("\t")
-            print(parts)
+            # print(parts)
             project = Project(parts[0], parts[1], int(parts[2]), float(parts[3]), int(parts[4]))
             projects.append(project)
-    return projects
+    return projects, headers
 
 
-def save_projects(projects, filename):
-    pass
+def save_projects(projects, filename, headers=""):
+    """Save updated projects (with headers) to file."""
+    with open(filename, 'w') as out_file:
+        print(headers, file=out_file)
+        for project in projects:
+            print(repr(project), file=out_file)
 
 
 def display_projects(projects):
@@ -105,8 +115,87 @@ def add_project():
     pass
 
 
-def update_project():
+def update_project(project):
     pass
+    # new_priority = input("New priority: ")
+    # try:
+    #     project.priority = int(new_priority)
+    # except ValueError:
+    #     if new_priority != "":
+    #         print("Invalid input")
+
+
+def get_number(lower_limit, upper_limit, prompt="Number: "):
+    """Get valid integer between lower and upper limits (inclusive) from user input."""
+    is_valid_input = False
+    while not is_valid_input:
+        try:
+            number = int(input(prompt))
+            if number < lower_limit or number > upper_limit:
+                print(f"Number must be between {lower_limit} and {upper_limit} (inclusive)")
+            else:
+                is_valid_input = True
+        except ValueError:
+            print("Invalid (not an integer)")
+    return number  # Ignore Pycharm warning (impossible error)
 
 
 main()
+
+"""
+imports
+constants
+
+main:
+load projects (default txt)
+print menu & get choice
+choice not quit:
+    - load:
+        - get filename -> file
+        - load projects (file) -> projects
+            - completion and priority: ints
+            - name: str
+            - cost: float
+            - start: datetime
+            projects.sort
+            return projects
+            
+    - save:
+        - get filename -> file
+        - save projects (projects, file)
+        
+    - display:  # figure this one out!
+        - display (projects)
+            projects.sort()
+            complete = []
+            print("Incomplete projects:")
+            for project in projects:
+                print project if incomplete, else add to complete
+            print("complete")
+            
+    - filter by date:       
+        - get date:
+            date_string = input("Show projects that start after date (dd/mm/yy): ")
+            date = datetime.datetime.strptime(date_string, "%d%m%Y"   # check formatting (dmY would be eg 01/02/2004)
+            return date
+        - print filtered projects (projects, date)
+            for project in projects:
+                print project if project.date > date
+    
+    -  add project(projects):
+        - name = input "project name: "
+        - date = get date
+        - priority = get number?
+        - cost = float input "cost: "
+        - completion = get number?
+               
+    - update project(projects)
+        - print:  i, project for ... enum(projects)
+        - get number (within range(len(projects)) 
+        - 
+
+- get number 
+    (for updating, 
+sort projects at end of loading, adding and updating.
+         
+"""
