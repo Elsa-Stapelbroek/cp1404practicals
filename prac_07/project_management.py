@@ -26,6 +26,7 @@ Expectations:
     - Error checking. Do no error checking to start with.
     - Date formatting. Just use a string until most everything else works, then, here are some suggestions.
 """
+
 from prac_07.project import Project
 
 FILENAME = "projects.txt"
@@ -58,13 +59,13 @@ def main():
         elif menu_choice == "A":
             add_project()
         elif menu_choice == "U":
+            # TODO: condense this section into function(s)
             for i, project in enumerate(projects):
                 print(f"{i} {project}")
-            project_to_update = projects[
-                get_number(0, len(projects) - 1, "Project choice: ")]  # currently relies on enumerate starting at 0
-            print(project_to_update)
-            update_project(project_to_update)
-            # update_project()
+            project_choice = projects[get_number_in_range(len(projects), "Project choice: ")]
+            print(project_choice)
+            update_project(project_choice)
+            projects.sort()
         else:
             print("Invalid input!")
         print(MENU)
@@ -83,6 +84,7 @@ def load_projects(filename):
             # print(parts)
             project = Project(parts[0], parts[1], int(parts[2]), float(parts[3]), int(parts[4]))
             projects.append(project)
+    projects.sort()
     return projects, headers
 
 
@@ -96,7 +98,6 @@ def save_projects(projects, filename, headers=""):
 
 def display_projects(projects):
     """Display projects grouped by completion status and order by priority."""
-    projects.sort()
     completed_projects = []
     print("Incomplete projects:")
     for project in projects:
@@ -116,13 +117,31 @@ def add_project():
 
 
 def update_project(project):
-    pass
-    # new_priority = input("New priority: ")
-    # try:
-    #     project.priority = int(new_priority)
-    # except ValueError:
-    #     if new_priority != "":
-    #         print("Invalid input")
+    """Update the priority and/or completion percentage based on user input."""
+    project.priority = get_value(project.priority, "priority")
+    new_percentage = get_value(project.completion, "completion")
+    while 0 > new_percentage or new_percentage > 100:  # Make sure percentage is in valid range
+        print("Invalid percentage")
+        new_percentage = get_value(project.completion, "completion")
+    project.completion = new_percentage
+
+
+def get_number_in_range(upper_limit, prompt="Number in range: "):
+    """Get number within specified range."""
+    number = int(input(prompt))
+    while number not in range(upper_limit):
+        print("Number outside valid range.")
+        number = int(input(prompt))
+    return number
+
+
+def get_value(field, fieldname):  # surely that doesn't have to be two params?
+    """Return new field value from user input (no change if input is empty string)."""
+    value = input(f"New {fieldname}: ")
+    if value == "":
+        return field  # Field unchanged
+    else:
+        return int(value)  # No error checking yet!
 
 
 def get_number(lower_limit, upper_limit, prompt="Number: "):
@@ -141,61 +160,3 @@ def get_number(lower_limit, upper_limit, prompt="Number: "):
 
 
 main()
-
-"""
-imports
-constants
-
-main:
-load projects (default txt)
-print menu & get choice
-choice not quit:
-    - load:
-        - get filename -> file
-        - load projects (file) -> projects
-            - completion and priority: ints
-            - name: str
-            - cost: float
-            - start: datetime
-            projects.sort
-            return projects
-            
-    - save:
-        - get filename -> file
-        - save projects (projects, file)
-        
-    - display:  # figure this one out!
-        - display (projects)
-            projects.sort()
-            complete = []
-            print("Incomplete projects:")
-            for project in projects:
-                print project if incomplete, else add to complete
-            print("complete")
-            
-    - filter by date:       
-        - get date:
-            date_string = input("Show projects that start after date (dd/mm/yy): ")
-            date = datetime.datetime.strptime(date_string, "%d%m%Y"   # check formatting (dmY would be eg 01/02/2004)
-            return date
-        - print filtered projects (projects, date)
-            for project in projects:
-                print project if project.date > date
-    
-    -  add project(projects):
-        - name = input "project name: "
-        - date = get date
-        - priority = get number?
-        - cost = float input "cost: "
-        - completion = get number?
-               
-    - update project(projects)
-        - print:  i, project for ... enum(projects)
-        - get number (within range(len(projects)) 
-        - 
-
-- get number 
-    (for updating, 
-sort projects at end of loading, adding and updating.
-         
-"""
