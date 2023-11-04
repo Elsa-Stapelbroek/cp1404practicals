@@ -18,16 +18,14 @@ Update project: (Choose a project, then modify the completion % and/or priority 
 
 Expectations:
 - Use the datetime module for the project start date
-- Write your class to sort/compare Project objects based on priority order
 - Think about writing utility/helper methods in your class and main program.
-- Follow good design principles like SRP and DRY. Notice that there's two kinds of loading and write one function to
-handle both. Same for saving.
+- Follow good design principles like SRP and DRY.
 - Write good clean code (no pylint warnings) with good naming and design (as always!)
 - Here are two suggestions to leave until last (iterative development):
     - Error checking. Do no error checking to start with.
     - Date formatting. Just use a string until most everything else works, then, here are some suggestions.
 """
-
+from datetime import datetime
 from prac_07.project import Project
 
 FILENAME = "projects.txt"
@@ -56,7 +54,7 @@ def main():
         elif menu_choice == "D":
             display_projects(projects)
         elif menu_choice == "F":
-            filter_projects()
+            filter_projects(projects)
         elif menu_choice == "A":
             add_project(projects)
         elif menu_choice == "U":
@@ -84,7 +82,9 @@ def load_projects(filename):
         for line in in_file:
             parts = line.strip().split("\t")
             # print(parts)
-            project = Project(parts[0], parts[1], int(parts[2]), float(parts[3]), int(parts[4]))
+            project = Project(parts[0], datetime.strptime(parts[1], "%d/%m/%Y").date(), int(parts[2]), float(parts[3]),
+                              int(parts[4]))
+            # TODO check: date formatting weird now. not sure whether to use dt here, ivm interactions with class file.
             projects.append(project)
     projects.sort()
     return projects, headers
@@ -105,20 +105,30 @@ def display_projects(projects):
     for project in projects:
         print(project) if not project.is_completed() else completed_projects.append(project)
     print("Completed projects:")
-    for project in completed_projects:  # DRY??
+    for project in completed_projects:
         print(project)
-    # Tried generator, didn't work (figure out why!), surely there's a nicer way?
 
 
-def filter_projects():
-    pass
+def filter_projects(projects):
+    date_threshold = get_date("Show projects that start after date")
+    for project in projects:
+        if project.start_date >= date_threshold:
+            print(project)
+    # print("\n".join(str(project) for project in projects if project.start_date > date_threshold))
+
+
+def get_date(prompt):
+    """Get date from user input."""
+    date_string = input(f"{prompt} (dd/mm/yy): ")
+    date = datetime.strptime(date_string, "%d/%m/%Y").date()  # check formatting (dmY would be e.g. 01/02/2004)
+    return date
 
 
 def add_project(projects):
     """Add project from user input."""
     print("Let's add a new project")
     name = input("Name: ")
-    start_date = input("Start date (dd/mm/yy): ")
+    start_date = get_date("Start date")
     priority = get_number("Priority: ")
     cost_estimate = float(input("Cost estimate: $"))  # not yet error-checked
     completion = get_number_in_range(100, "Percent complete: ")
@@ -130,7 +140,7 @@ def update_project(project):
     """Update the priority and/or completion percentage based on user input."""
     project.priority = get_updated_value(project.priority, "priority")
     new_percentage = get_updated_value(project.completion, "completion")
-    while 0 > new_percentage or new_percentage > 100:  # Make sure percentage is in valid range
+    while new_percentage < 0 or new_percentage > 100:  # Make sure percentage is in valid range
         print("Invalid percentage")
         new_percentage = get_updated_value(project.completion, "completion")
     project.completion = new_percentage
