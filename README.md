@@ -2,8 +2,8 @@
 
 ## Details
 
-This folder contains the practical work I've completed for CP1404 at James Cook University (TR3 2023)
-CP1404 (Programming 2) at James Cook University, run in TR3 2023 (TSV internal).
+This folder contains the practical work I've completed for CP1404 at James Cook University (TR3 2023, TSV internal)
+
 
 I'm currently doing a Bachelor of Marine Science (with a focus on marine physics) and am taking this subject as an
 elective.
