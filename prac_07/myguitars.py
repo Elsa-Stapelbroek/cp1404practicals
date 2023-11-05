@@ -3,20 +3,6 @@ CP1404 practical 7 - More guitars!
 
 Estimate: 45 minutes
 Actual: ~50 minutes
-
-Format: Name,Year,Cost
-- Write a program to read all of these guitars and store them in a list of Guitar objects, using class.
-- Display these using a loop.
-
-- sort the list by year (oldest to newest) and display them in sorted order
-    - define how the < operator should work.
-    - Write code for the __lt__ (less than) method so that it compares Guitars by year.
-    - Then test and see if it sorts correctly now.
-
-- Add to your program to ask the user to enter their new guitars (just like your program from an earlier prac).
-    - Store these new guitars in your list of guitar objects, then
-    - write all of your guitars to the data file guitars.csv.
-- Test that this worked by opening the data file, and by running the program again to make sure it reads new guitars.
 """
 from prac_07.guitar import Guitar
 
@@ -24,7 +10,7 @@ FILENAME = "guitars.csv"
 
 
 def main():
-    """Program to order (by year) and display Guitar objects loaded from csv."""
+    """Program to load, order (by year), and display list of Guitars from csv."""
     guitars = load_guitars()
     guitars.sort()
     for guitar in guitars:
@@ -44,7 +30,7 @@ def load_guitars():
 
 
 def get_more_guitars(guitars):
-    """Add guitars from user input to list until given an empty name."""
+    """Ask user for Guitars to add to list, until name is left empty."""
     name = input("Name: ")
     while name != "":
         year = int(input("Year: "))

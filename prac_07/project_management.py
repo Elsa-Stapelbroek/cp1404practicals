@@ -6,10 +6,10 @@ actual time: honestly don't know (was somewhat on track at around 55 minutes, th
 up taking way more time.).
 
 notes/questions:
-- currently storing start_date as a string (despite being mismatched data structure), since I wasn't sure about using
-modules inside classes. (not sure if that makes sense)
+- Wasn't sure about using modules inside classes, so currently storing start_date as a string (but probably shouldn't).
 - so many functions for getting numbers... seems unnecessary (also inconsistent approach to range check for the
 percentage in update project section).
+(- Repetitive exception handling? (but also missing FileNotFound exception))
 """
 from datetime import datetime
 from prac_07.project import Project
@@ -58,7 +58,7 @@ def main():
 def load_projects(filename):
     """Load list of Projects from file."""
     projects = []
-    with open(filename, 'r') as in_file:
+    with open(filename, 'r', encoding="UTF-8") as in_file:
         headers = in_file.readline().strip()
         for line in in_file:
             parts = line.strip().split("\t")
@@ -70,7 +70,7 @@ def load_projects(filename):
 
 def save_projects(projects, filename, headers=""):
     """Save updated projects (with headers) to file."""
-    with open(filename, 'w') as out_file:
+    with open(filename, 'w', encoding="UTF-8") as out_file:
         print(headers, file=out_file)
         for project in projects:
             print(repr(project), file=out_file)
@@ -100,10 +100,10 @@ def add_project(projects):
     """Add project from user input."""
     print("Let's add a new project")
     name = input("Name: ")
-    start_date = get_date("Start date").strftime("%d/%m/%Y")  # TODO: COMMENT/EXPLAIN YOURSELF
+    start_date = get_date("Start date").strftime("%d/%m/%Y")
     priority = get_number("Priority: ")
     cost_estimate = float(input("Cost estimate: $"))  # not yet error-checked
-    completion = get_number_in_range(100, "Percent complete: ")
+    completion = get_number_in_range(101, "Percent complete: ")
     projects.append(Project(name, start_date, priority, cost_estimate, completion))
     projects.sort()
 
@@ -122,10 +122,23 @@ def update_project(project):
     """Update the priority and/or completion percentage based on user input."""
     project.priority = get_new_value(project.priority, "priority")
     new_percentage = get_new_value(project.completion, "completion")
-    while new_percentage < 0 or new_percentage > 100:  # Make sure percentage is in valid range
+    while new_percentage < 0 or new_percentage > 100:
         print("Invalid percentage")
         new_percentage = get_new_value(project.completion, "completion")
     project.completion = new_percentage
+
+
+def get_new_value(field, fieldname):
+    """Return new field value from user input (no change if input is empty string)."""
+    value = input(f"New {fieldname}: ")
+    is_valid = False
+    while not is_valid:
+        try:
+            field = int(value)
+            is_valid = True
+        except ValueError:
+            is_valid = not value  # True if input is empty
+    return field
 
 
 def get_date(prompt):
@@ -147,6 +160,7 @@ def get_number(prompt="Number: "):
     while not is_valid_input:
         try:
             number = int(input(prompt))
+            is_valid_input = True
         except ValueError:
             print("Invalid input")
     return number  # Ignore Pycharm warning (impossible error)
@@ -159,15 +173,6 @@ def get_number_in_range(upper_limit, prompt="Number in range: "):
         print("Number outside valid range.")
         number = get_number(prompt)
     return number
-
-
-def get_new_value(field, fieldname):
-    """Return new field value from user input (no change if input is empty string)."""
-    value = input(f"New {fieldname}: ")
-    if value == "":
-        return field  # Field unchanged
-    else:
-        return int(value)  # Not yet error checked!
 
 
 main()
