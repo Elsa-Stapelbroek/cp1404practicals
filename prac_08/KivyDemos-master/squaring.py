@@ -14,6 +14,7 @@ __author__ = 'Lindsay Ward'
 
 class SquareNumberApp(App):
     """ SquareNumberApp is a Kivy App for squaring a number """
+
     def build(self):
         """ build the Kivy app from the kv file """
         Window.size = (200, 100)
@@ -25,7 +26,7 @@ class SquareNumberApp(App):
         """ handle calculation (could be button press or other call), output result to label widget """
         try:
             result = float(value) ** 2
-            self.root.ids.output_label.text = str(result)
+            self.root.ids.output_label.text = str(result)  # Convert to string for text attr (is it an attr?)
         except ValueError:
             pass
 
