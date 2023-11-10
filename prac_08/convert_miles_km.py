@@ -21,10 +21,13 @@ class ConvertMilesKm(App):
         try:
             self.result = str(float(self.root.ids.input_number.text) * CONVERSION_FACTOR)
         except ValueError:
-            pass
+            self.result = str(0.0)
 
     def handle_increment(self, user_input, increment):
-        self.root.ids.input_number.text = str(float(user_input) + increment)
+        try:
+            self.root.ids.input_number.text = str(float(user_input) + increment)
+        except ValueError:
+            self.root.ids.input_number.text = str(0 + increment)
         # not sure if that's what we're supposed to do, but it works :)
 
 
