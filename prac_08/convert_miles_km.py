@@ -17,11 +17,15 @@ class ConvertMilesKm(App):
         return self.root
 
     def handle_convert(self):
-        """"""
+        """Convert miles from input field to kilometres."""
         try:
             self.result = str(float(self.root.ids.input_number.text) * CONVERSION_FACTOR)
         except ValueError:
             pass
+
+    def handle_increment(self, user_input, increment):
+        self.root.ids.input_number.text = str(float(user_input) + increment)
+        # not sure if that's what we're supposed to do, but it works :)
 
 
 ConvertMilesKm().run()
