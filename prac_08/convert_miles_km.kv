@@ -3,7 +3,8 @@ BoxLayout:
     BoxLayout:
         orientation: 'horizontal'
         TextInput:
-            text: ''
+            id: input_number
+            text:
         BoxLayout:
             orientation: 'vertical'
             Button:
@@ -12,5 +13,9 @@ BoxLayout:
                 text: 'down'
     Button:
         text: 'Convert miles to km'
+        on_press: app.handle_convert()
+
     Label:
-        text: ''
+        id: output_label
+        text: app.result
+        color: (1,1,0,1)
