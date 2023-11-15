@@ -1,3 +1,4 @@
+"""CP1404 practical 8 - Walkthrough example: Modify existing GUI"""
 from kivy.app import App
 from kivy.lang import Builder
 

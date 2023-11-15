@@ -1,5 +1,5 @@
 """
-CP1404/CP5632 Practical
+CP1404/CP5632 Practical 8 - Intermediate exercise: Square Number
 Kivy GUI program to square a number
 Lindsay Ward, IT@JCU
 Started 13/10/2015
@@ -26,7 +26,7 @@ class SquareNumberApp(App):
         """ handle calculation (could be button press or other call), output result to label widget """
         try:
             result = float(value) ** 2
-            self.root.ids.output_label.text = str(result)  # Convert to string for text attr (is it an attr?)
+            self.root.ids.output_label.text = str(result)
         except ValueError:
             pass
 

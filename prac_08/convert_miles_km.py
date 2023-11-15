@@ -1,6 +1,4 @@
-"""
-CP1404 practical 8 - Do-from-scratch 1: Miles to Kilometres Converter
-"""
+"""CP1404 practical 8 - Do-from-scratch 1: Miles to Kilometres Converter"""
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import StringProperty
