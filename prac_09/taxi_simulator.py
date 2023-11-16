@@ -1,6 +1,6 @@
 """CP1404 practical 9 - Do-from-scratch exercise: Taxi Simulator
 
-
+Might add: get_number() to get valid integer from user. not sure if the prompt param thing is alright though.
 """
 
 from prac_09.taxi import Taxi
@@ -13,18 +13,33 @@ def main():
     print("Let's drive!")
     taxis = [Taxi("Prius", 100), SilverServiceTaxi(name="Limo", fuel=100, fanciness=2),
              SilverServiceTaxi(name="Hummer", fuel=200, fanciness=4)]
+    current_taxi = None
+    total_cost = 0.00
 
     print(MENU)
     choice = input(">>> ").lower()
-    current_taxi = None
     while choice != 'q':
         if choice == 'c':
+            print("Taxis available:")
             display_taxis(taxis)
             taxi_choice = int(input("Choose taxi: "))
             current_taxi = choose_taxi(taxi_choice, taxis)
-
+        elif choice == 'd':
+            try:
+                current_taxi.start_fare()
+                current_taxi.drive(int(input("Drive how far? ")))
+                print(f"Your {current_taxi.name} trip cost you ${current_taxi.get_fare():.2f}")
+                total_cost += current_taxi.get_fare()
+            except AttributeError:
+                print("You need to choose a taxi before you can drive")
+        print(f"Bill to date: ${total_cost:.2f}")
         print(MENU)
         choice = input(">>> ").lower()
+
+
+def display_taxis(taxis):
+    for i, taxi in enumerate(taxis):
+        print(f"{i} - {taxi}")
 
 
 def choose_taxi(taxi_choice, taxis):
@@ -32,12 +47,6 @@ def choose_taxi(taxi_choice, taxis):
         return taxis[taxi_choice]
     else:
         print("Invalid taxi choice")
-
-
-def display_taxis(taxis):
-    print("Taxis available:")
-    for i, taxi in enumerate(taxis):
-        print(f"{i} - {taxi}")
 
 
 main()
