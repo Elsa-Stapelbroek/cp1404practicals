@@ -22,7 +22,7 @@ class Musician:
         self.instruments.append(instrument)
 
     def play(self):
-        """Return a string showing the instrument playing their first (or no) instrument."""
+        """Return a string showing the musician playing their first (or no) instrument."""
         if not self.instruments:
             return f"{self.name} needs an instrument!"
         return f"{self.name} is playing: {self.instruments[0]}"
