@@ -1,7 +1,4 @@
-"""CP1404 practical 9 - Do-from-scratch exercise: Taxi Simulator
-
-Might add: get_number() to get valid integer from user. not sure if the prompt param thing is alright though.
-"""
+"""CP1404 practical 9 - Do-from-scratch exercise: Taxi Simulator"""
 
 from prac_09.taxi import Taxi
 from prac_09.silver_service_taxi import SilverServiceTaxi
@@ -32,9 +29,14 @@ def main():
                 total_cost += current_taxi.get_fare()
             except AttributeError:
                 print("You need to choose a taxi before you can drive")
+        else:
+            print("Invalid option")
         print(f"Bill to date: ${total_cost:.2f}")
         print(MENU)
         choice = input(">>> ").lower()
+    print(f"Total trip cost: ${total_cost:.2f}")
+    print("Taxis are now:")
+    display_taxis(taxis)
 
 
 def display_taxis(taxis):
