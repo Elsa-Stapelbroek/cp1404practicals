@@ -1,8 +1,12 @@
-"""CP1404 practical 9 - Intermediate exercise 3: Association, not inheritance"""
+"""
+CP1404 practical 9 - Intermediate exercise 3: Association, not inheritance
+Worked with Jesse Purcell during week 9 seminar (Tue 14/11)
+"""
 
 
 class Band:
     """Represent a Band object."""
+
     def __init__(self, name, ):
         """Initialise a Band instance."""
         self.name = name

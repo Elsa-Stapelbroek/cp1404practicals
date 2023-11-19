@@ -17,5 +17,5 @@ class SilverServiceTaxi(Taxi):
         return f"{super().__str__()} plus flagfall of ${self.flagfall:.2f}"
 
     def get_fare(self):
-        """Calculate fare like parent Taxi, but add flagfall as well."""
+        """Calculate fare like parent Taxi and add flagfall charge."""
         return super().get_fare() + self.flagfall
