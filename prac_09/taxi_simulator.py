@@ -7,6 +7,7 @@ MENU = "q)uit, c)hoose taxi, d)rive"
 
 
 def main():
+    """Menu based taxi simulator that uses Taxi and SilverServiceTaxi classes."""
     print("Let's drive!")
     taxis = [Taxi("Prius", 100), SilverServiceTaxi(name="Limo", fuel=100, fanciness=2),
              SilverServiceTaxi(name="Hummer", fuel=200, fanciness=4)]
@@ -19,13 +20,10 @@ def main():
         if choice == 'c':
             print("Taxis available:")
             display_taxis(taxis)
-            taxi_choice = int(input("Choose taxi: "))
-            current_taxi = choose_taxi(taxi_choice, taxis)
+            current_taxi = choose_taxi(taxis)  # None if taxi choice is invalid
         elif choice == 'd':
             try:
-                current_taxi.start_fare()
-                current_taxi.drive(int(input("Drive how far? ")))
-                print(f"Your {current_taxi.name} trip cost you ${current_taxi.get_fare():.2f}")
+                drive_taxi(current_taxi)
                 total_cost += current_taxi.get_fare()
             except AttributeError:
                 print("You need to choose a taxi before you can drive")
@@ -40,15 +38,26 @@ def main():
 
 
 def display_taxis(taxis):
+    """Display numbered list of available taxis."""
     for i, taxi in enumerate(taxis):
         print(f"{i} - {taxi}")
 
 
-def choose_taxi(taxi_choice, taxis):
-    if taxi_choice in range(len(taxis)):
-        return taxis[taxi_choice]
-    else:
+def choose_taxi(taxis):
+    """Get Taxi choice from user input."""
+    try:
+        return taxis[int(input("Choose taxi: "))]
+    except ValueError:
         print("Invalid taxi choice")
+    except IndexError:
+        print("Invalid taxi choice")
+
+
+def drive_taxi(taxi):
+    """Get driving distance from user input and display fare."""
+    taxi.start_fare()
+    taxi.drive(int(input("Drive how far? ")))
+    print(f"Your {taxi.name} trip cost you ${taxi.get_fare():.2f}")
 
 
 main()
