@@ -17,8 +17,8 @@ Similarly, it was cool to see what people noticed reading my code and their revi
 overlooked (or affirm decisions I wasn't as confident about before).
 
 Here are two examples of the reviews I've done:
-- [Practical 6](https://github.com/ctown0711/cp1404practicals/pull/3#event-10808702797)
-- [Practical 9](https://github.com/E-Hunter1632/cp1404practicals/pull/6#event-11042038426)
+- [Practical 6](https://github.com/ctown0711/cp1404practicals/pull/3)
+- [Practical 9](https://github.com/E-Hunter1632/cp1404practicals/pull/6)
 
 ## Practical tasks
 
