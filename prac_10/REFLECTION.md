@@ -16,10 +16,14 @@ doing that. (The first code review took me longer than the actual practical that
 Similarly, it was cool to see what people noticed reading my code and their reviews helped highlight details I'd
 overlooked (or affirm decisions I wasn't as confident about before).
 
+Here are two examples of the reviews I've done:
+- [Practical 6](https://github.com/ctown0711/cp1404practicals/pull/3#event-10808702797)
+- [Practical 9](https://github.com/E-Hunter1632/cp1404practicals/pull/6#event-11042038426)
+
 ## Practical tasks
 
-Honestly, I'm not sure. If I were a teacher, I might've asked students to write an exercise (perhaps using xyz concepts/
-patterns), though that could be difficult to mark (and I'm quite relieved that we didn't have to do that (despite how
-useful it might be)).
+Honestly, I'm not sure what I would change. If I were a teacher, I might've asked students to write an 
+exercise (perhaps using xyz concepts/ patterns), though that could be difficult to mark (and I'm quite relieved that we 
+didn't have to do that (despite how useful it might be)).
 
 
